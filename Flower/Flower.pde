@@ -1,63 +1,34 @@
-Ball b;
-
+Object o;
+Object o2;
+int r = 60;
 void setup() {
-  size(600,400);
-  b = new Ball();
+  size(600, 400);
+  o = new Object(r, width/2, height/2, 3, 3);
+  o2 = new Object(r, width/2, height/2, 3, 3, true);
 }
 
 void draw()
 {
   background(#43AF76);
-  b.move();
-  b.display();
-  b.edgeCollider();
+  o.move();
+  o.display();
+  o.edgeCollider();
+  //o2.move();
+  o2.display();
+  o2.edgeCollider();
+  collision();
 }  
-
-class Ball
+void mousePressed()
 {
- int r;
- float ballX;
- float ballY;
- float xSpeed;
- float ySpeed;
- float x;
- float y;
- Ball()
- {
-   r = 60;
-   x = width/2;
-   y = height/2;
-   xSpeed = 3;
-   ySpeed = 3;
- }
- 
- void move()
- {
-  x = x + xSpeed;
-  y = y + ySpeed;
- }
- void display()
- {
-  fill(#FFA005);
-  for (float i=0;i<PI*2;i+=2*PI/6) 
-  {
-    ballX=x + r*cos(i);
-    ballY=y + r*sin(i);
-    ellipse(ballX,ballY,r,r);
-  }
-  fill(20,0,100);
-  ellipse(x,y,r*1.1,r*1.1);
- }
-  void edgeCollider()
-  {
-   if(x > width || x < 0)
-   {
-     xSpeed = xSpeed * -1;
-   }
-   if(y > height || y < 0)
-   {
-     ySpeed = ySpeed * -1;
-   }
-  }
+  o2.x = mouseX;
+  o2.y = mouseY;
 }
- 
+void collision()
+{
+ if(dist(o.x,o.y,o2.x,o2.y) < r*2)
+ {
+   o2.c = #17FF08;
+ }else{
+   o2.c = #140064;
+ }
+}
